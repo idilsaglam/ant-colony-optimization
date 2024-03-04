@@ -1,0 +1,22 @@
+@startuml
+left to right direction
+
+abstract class ObjectMapperFactory{
+    -createSettingsBuilderSerializer():ObjectMapper
+    -createSettingsBuilderDeserializer():ObjectMapper
+    -boardBuilderDeserializer():ObjectMapper
+    -boardBuilderSerializer():ObjectMapper
+}
+
+class ObjectMapperBuilder{
+    -module:SimpleModule 
+    -mixins:Map<Class<?>, Class<?>>
+    ..
+    -<T>addSerializer(type:Class<? extends T>,serializer:JsonSerializer<T>):ObjectMapperBuilder
+    -<T>addDeserializer(type:Class<? extends T>,deserializer:JsonDeserializer<T>):ObjectMapperBuilder
+    -build():ObjectMapper
+}
+
+ObjectMapperFactory +-- ObjectMapperBuilder
+
+@enduml

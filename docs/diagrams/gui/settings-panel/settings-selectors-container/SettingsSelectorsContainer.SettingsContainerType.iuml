@@ -1,0 +1,13 @@
+@startuml(id=SettingsPanel_SettingsSelectorsContainer_SettingsContainerType)
+left to right direction
+package aco.gui {
+  enum SettingsPanel.SettingsSelectorsContainer.SettingsContainerType {
+    COMMON_SETTINGS
+    BUILDER_SETTINGS
+    PREVIEW_SETTINGS
+    --
+    - getTitle(): String
+  }
+}
+SettingsPanel.SettingsSelectorsContainer.SettingsContainerType --> aco.core.MessageResolver
+@enduml

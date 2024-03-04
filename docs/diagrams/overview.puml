@@ -1,0 +1,12 @@
+@startuml
+left to right direction
+!include_many gui/module.iuml!GUI_MODULE
+!include_many core/module.iuml!CORE_MODULE
+
+aco.gui.SettingsPanel --> aco.core.MessageResolver
+aco.gui.SettingsPanel --> aco.core.Settings.SettingsBuilder
+aco.gui.SettingsPanel.SettingsPanelController ..|> aco.core.Settings.SettingsBuilder.Subscriber
+aco.gui.SettingsPanel --> aco.core.Settings.SettingsBuilder
+aco.gui.SettingsPanel.SettingsPanelController --> aco.core.Settings.SettingsBuilder
+aco.gui.SettingsPanel.SettingsPanelController --> aco.core.Settings.SettingsBuilder.Subscriber.Event
+@enduml

@@ -1,0 +1,13 @@
+@startuml(id=SettingsPanel_SettingsButtonsContainer_SettingsButtonTypes)
+left to right direction
+enum aco.gui.SettingsPanel.SettingsButtonsContainer.SettingsButtonTypes {
+  LOAD
+  SAVE
+  APPLY
+  CANCEL
+  DEFAULT
+  --
+  + toString(): String
+}
+aco.gui.SettingsPanel.SettingsButtonsContainer.SettingsButtonTypes --> java.lang.String
+@enduml

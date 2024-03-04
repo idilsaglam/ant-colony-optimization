@@ -1,0 +1,41 @@
+@startuml(id=SettingsPanel_SettingsPanelController)
+left to right direction
+class aco.gui.SettingsPanel.SettingsPanelController {
+  + eventHandlers: Map<Settings.SettingsBuilder.Subscriber.Event, SettingsPanel.SettingsSelectorsContainer.SettingsContainer.SettingsContainerRow>
+  - settingsBuilder: Settings.SettingsBuilder
+  --
+  + SettingsPanelController(settingsBuilder: Settings.SettingsBuilder)
+  + setStatusBarCircleNextColor(color: Color): void
+  + setStatusBarCircleCurrentColor(color: Color): void
+  + setStatusBarCircleCompletedColor(color: Color): void
+  + setSourcePointColor(color: Color): void
+  + setDestinationPointColor(color: Color): void
+  + setObstacleColor(color: Color): void
+  + setBoardBorderColor(color: Color): void
+  + setMapBackgroundColor(color: Color): void
+  + setMapFrameColor(color: Color ): void
+  + setBoardBuilderDraftBorderColor(color: Color ): void
+  + setMapBuilderDraftBackgroundColor(color: Color ): void
+  + setMapBorderThickness(thickness: Integer): void
+  + setSourcePointRadius(radius: Integer): void
+  + setDestinationPointRadius(radius: Integer): void
+  + setAntColor(color: Color ): void
+  + setNumberOfAnts(nbAnts: int): void
+  + setNumberOfAntsPerSecond(antsPerSecond: int): void
+  + setPheromoneColor(color: Color): void
+  + setPheromoneIntensityTimeoutMs(timeoutMs: Integer): void
+  + getSettingsButtonActionListener(buttonType: SettingsPanel.SettingsButtonsContainer.SettingsButtonTypes): ActionListener
+  + on(event: Settings.SettingsBuilder.Subscriber.Event): void
+  - saveSettings(ignore: ActionEvent): void
+  - loadSettings(ignore: ActionEvent): void
+  - cancelSettings(ignore: ActionEvent): void
+  - applySettings(ignore: ActionEvent): void
+  - resetSettings(ignore: ActionEvent): void
+}
+
+aco.gui.SettingsPanel.SettingsPanelController --> java.util.Map
+aco.gui.SettingsPanel.SettingsPanelController --> java.awt.Color
+aco.gui.SettingsPanel.SettingsPanelController --> java.lang.Integer
+aco.gui.SettingsPanel.SettingsPanelController --> java.awt.event.ActionListener
+aco.gui.SettingsPanel.SettingsPanelController --> java.awt.event.ActionEvent
+@enduml

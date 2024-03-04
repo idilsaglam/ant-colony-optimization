@@ -1,0 +1,10 @@
+@startuml
+left to right direction
+
+abstract class DeserializerFactory{
+    -rectangleDeserializer():StdDeserializer<Rectangle>
+    -circleDeserializer():StdDeserializer<Circle>
+    -colorDeserializer():StdDeserializer<Color>
+}
+
+@enduml

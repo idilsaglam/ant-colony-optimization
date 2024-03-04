@@ -1,0 +1,13 @@
+@startuml(id=MessageResolver)
+left to right direction
+
+class aco.core.MessageResolver {
+  - properties: Properties
+  --
+  - initilaize(): Properties
+  + getMessage(key: String): String
+}
+
+aco.core.MessageResolver --> java.util.Properties
+
+@enduml

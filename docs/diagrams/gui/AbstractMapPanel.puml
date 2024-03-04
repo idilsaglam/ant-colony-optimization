@@ -1,0 +1,106 @@
+@startuml
+left to right direction
+
+abstract class AbstractMapPanel extends JSplitPane{
+    #HEADER_DEFAULT_VERTICAL_RATIO:double 
+    #settings:Settings 
+    #size:Dimension
+    ..
+    #AbstractMapPanel(size:Dimension, settings:Settings)
+}
+
+abstract class AbstractHeader extends JSplitPane{
+    #HEADER_STATUS_BAR_DEFAULT_HORIZONTAL_RATIO:double 
+    #size:Dimension
+    #AbstractHeader()
+
+}
+abstract class AbstractStatusBar extends JPanel{
+    -gbc:GridBagConstraints
+    ..
+    #AbstractStatusBar()
+    #addX(component:JComponent)
+
+}
+abstract class AbstractButtonsContainer extends JPanel{
+    #buttons:Map<T, JButton>
+    -gbc:GridBagConstraints
+    #AbstractButtonsContainer(
+        getButtonActionListener: Function<T, ActionListener>,
+        availableButtonTypes:T[],
+    )
+    #updateButtons():void 
+    #removeAllElements():void
+    #addX(buttonType:T):void
+    -addY(component:JComponent):void 
+    -addX(component:JComponent):void 
+    -buttonBuilder(buttonType:T,actionListener:ActionListener)
+}
+interface AbstractButtonType{
+    buttonString():String 
+    getDefaultEnabledValue:boolean
+}
+class AbstractBoardPanel extends JPanel {
+
+}
+
+class EllipticalBoardElement extends JPanel{
+ -color:Color
+ -semiMinor:double
+ -semiMajor:double 
+ -center:Point 
+ -ellipse:Ellipse2D
+ ..
+ paintComponent(g:Graphics):void 
+ getLocation():Point
+}
+class RectangularBoardElement extends JPanel { 
+    -RectangularBoardElement(color:Color,tlCorner:Point)
+    -RectangularBoardElement(color:Color,bounds:Rectangle)
+}
+class RoundBoardElement extends JPanel {
+    -color:Color
+    -raidus:int 
+    -circle:Board.Circle
+    ..
+    -RoundBoardElement(color:Color, radius:int, topLeftCorner:Point, toolTipText:String)
+    -paintComponent(g:Graphics)
+}
+
+abstract class AbstractController {
+
+}
+
+abstract class AbstractStatefulController{
+-currentState:T
+..
+#AbstractStatefulController(currentState:T)
+#getCurrentState():T
+#nextState(nextStateSupplier:Supplier<T>)
+#previousState(previousStateSupplier: Supplier):boolean 
+#updateButtonsVisibility()
+#previousState()
+#nextState()
+#updateChildren()
+
+}
+
+interface AbstractState {
+    toolTipText():String 
+    next():AbstractState
+    previous():AbstractState
+    hasNext():boolean
+    hasPrevious():boolean 
+    index():int
+}
+AbstractMapPanel +-- AbstractHeader
+AbstractMapPanel +-- AbstractButtonsContainer
+AbstractButtonsContainer +-- AbstractButtonType
+AbstractBoardPanel +-- EllipticalBoardElement
+AbstractBoardPanel +-- RectangularBoardElement
+AbstractBoardPanel +-- RoundBoardElement
+AbstractBoardPanel +-- AbstractController 
+AbstractController +-- AbstractStatefulController
+AbstractMapPanel +-- AbstractState
+
+@enduml

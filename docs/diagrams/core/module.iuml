@@ -1,0 +1,6 @@
+@startuml(id=CORE_MODULE)
+left to right direction
+!include_many MessageResolver.iuml!MessageResolver
+!include_many Settings.iuml!Settings
+
+@enduml

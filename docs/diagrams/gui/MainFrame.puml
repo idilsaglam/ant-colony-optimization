@@ -1,0 +1,12 @@
+@startuml
+
+class MainFrame{
+    - size:Dimension
+    -position = Point
+    - defaultSize:Rectangle 
+    - settings:Settings
+     - configurationpPanel = ConfigurationPanel;
+    - board:Board
+}
+
+@enduml

@@ -1,0 +1,21 @@
+@startuml(id=SettingsPanel_SettingsSelectorsContainer_SettingsContainer)
+left to right direction
+package aco.gui {
+  namespace SettingsPanel {
+    namespace SettingsSelectorsContainer {
+      class SettingsContainer extends javax.swing.JPanel {
+      - gbc: GridBagConstraints
+      - rows: Set<SettingsContainerRow>
+      --
+      - SettingsContainer(containerType: SettingsSelectorsContainer.SettingsContainerType):
+      }
+      SettingsContainer.SettingsContainerRow --+ SettingsPanel.SettingsSelectorsContainer.SettingsContainer
+
+      SettingsContainer --> java.awt.GridBagConstraints
+      SettingsContainer --> SettingsPanel.SettingsSelectorsContainer.SettingsContainer.SettingsContainerRow
+    }
+  }
+}
+
+
+@enduml

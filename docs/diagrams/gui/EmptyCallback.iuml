@@ -1,0 +1,6 @@
+@startuml(id=EmptyCallback)
+interface aco.gui.EmptyCallback {
+  --
+  + call(): void
+}
+@enduml

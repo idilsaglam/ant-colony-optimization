@@ -1,0 +1,30 @@
+@startuml(id=SettingsPanel)
+!include_many SettingsPanel.SettingsPanelController.iuml!SettingsPanel_SettingsPanelController
+!include_many ./settings-selectors-container/SettingsSelectorsContainer.iuml!SettingsPanel_SettingsSelectorsContainer
+!include_many SettingsPanel.SettingsButtonsContainer.iuml!SettingsPanel_SettingsButtonsContainer
+!include_many SettingsPanel.SettingsButtonsContainer.SettingsButtonTypes.iuml!SettingsPanel_SettingsButtonsContainer_SettingsButtonTypes
+
+left to right direction
+package aco.gui {
+  class SettingsPanel extends javax.swing.JPanel {
+    - COLOR_PREVIEW_DEFAULT_SIZE: java.awt.Dimension
+    - settingsSelectorsContainer: SettingsPanel.SettingSelectorsContainer
+    - buttonsContainer: SettingsPanel.SettingsPanelController
+    - onApply: Consumer<Settings.SettingsBuilder>
+    --
+    ~ SettingsPanel(onApply: Consumer<Settings.SettingsBuilder>, onCancel: EmptyCallback, settingsBuilder: Settings.SettingsBuilder)
+    - rebuild():void
+  }
+}
+
+aco.gui.SettingsPanel --> java.util.function.Consumer
+aco.gui.SettingsPanel.SettingsPanelController --+ aco.gui.SettingsPanel
+aco.gui.SettingsPanel.SettingsSelectorsContainer --+ aco.gui.SettingsPanel
+
+aco.gui.SettingsPanel.SettingsButtonsContainer --+ aco.gui.SettingsPanel
+aco.gui.SettingsPanel.SettingsButtonsContainer.SettingsButtonTypes --+ aco.gui.SettingsPanel.SettingsButtonsContainer
+
+aco.gui.SettingsPanel.SettingsPanelController --> aco.gui.SettingsPanel.SettingsButtonsContainer.SettingsButtonTypes
+aco.gui.SettingsPanel.SettingsPanelController --> aco.gui.SettingsPanel.SettingsSelectorsContainer.SettingsContainer.SettingsContainerRow
+
+@enduml

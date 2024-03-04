@@ -1,0 +1,10 @@
+@startuml
+left to right direction
+
+abstract class SerializerFactory{
+    -colorSerializer():StdSerializer<Color>
+    -rectangleSerializer():StdSerializer<Rectangle>
+    -circleSerializer():StdSerializer<Circle>
+}
+
+@enduml

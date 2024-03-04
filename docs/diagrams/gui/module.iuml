@@ -1,0 +1,8 @@
+@startuml(id=GUI_MODULE)
+left to right direction
+!include_many ./settings-panel/SettingsPanel.iuml!SettingsPanel
+!include_many EmptyCallback.iuml!EmptyCallback
+
+aco.gui.SettingsPanel --> aco.gui.EmptyCallback
+
+@enduml

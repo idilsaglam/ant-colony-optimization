@@ -1,0 +1,14 @@
+@startuml 
+
+class JSONFileChooser extends JFileChooser{
+    -parent:Component
+    -approuveButtonText:String
+    -FILE_EXTENSION:String
+    ..
+    -JSONFileChooser(title:String, parent:Component,approuveButtonText:String)
+    -JSONFileChooser(parent:Component)
+    -setApprouveButtonText(text:String)
+    -get():File
+}
+
+@enduml

@@ -1,0 +1,190 @@
+@startuml(id=Settings)
+class aco.core.Settings{
+    --
+    +sourcePointColor():Color
+    +sourcePointColor(color:Color):void
+    +destinationPointColor():Color
+    +destinationPointColor(color:Color):void
+    +obstacleColor():Color
+    +obstacleColor(color:Color):void
+    +mapBackgroundColor():Color
+    +mapBackgroundColor(color:Color):void
+    +antColor():Color
+    +antColor(color:Color):void
+    +mapFrameColor():Color
+    +mapFrameColor(color:Color):void
+    +statusBarCircleNextColor():Color
+    +statusBarCircleNextColor(color:Color):void
+    +statusBarCircleCurentColor():Color
+    +statusBarCircleCurentColor(color:Color):void
+    +statusBarCircleCompletedColor():Color
+    +statusBarCircleCompletedColor(color:Color):void
+    +boardBorderColor():Color
+    +boardBorderColor(color:Color):void
+    +boardBuilderDraftBorderColor():Color
+    +boardBuilderDraftBorderColor(color:Color):void
+    +mapBuilderDraftBackgroundColor():Color
+    +mapBuilderDraftBackgroundColor(color:Color):void
+    +pheromoneColor():Color
+    +pheromoneColor(color:Color):void
+    +numberOfAnts():int
+    +numberOfAnts(nb:int):void
+    +antsPerSecond():int
+    +antsPerSecond(nb:int):void
+    +sourcePointRadius():int
+    +sourcePointRadius(nb:int):void
+    +destinationPointRadius():int
+    +destinationPointRadius(nb:int):void
+    +mapBorderThickness():int
+    +mapBorderThickness(nb:int):void
+    +pheromoneIntensityTimeoutMs():int
+    +pheromoneIntensityTimeoutMs(nb:int):void
+    +antsSemiMinorAxis():double
+    +antsSemiMajorAxis(nb:double):void
+    +antsSemiMajorAxis():double
+    +antsSemiMinorAxis(nb:double):void
+    + Settings(
+        sourcePointColor: Color,
+        destinationPointColor: Color,
+        obstacleColor: Color,
+        mapBackgroundColor: Color,
+        antColor: Color,
+        mapFrameColor: Color,
+        statusBarCircleNextColor: Color,
+        statusBarCircleCurentColor: Color,
+        statusBarCircleCompletedColor: Color,
+        boardBorderColor: Color,
+        boardBuilderDraftBorderColor: Color,
+        mapBuilderDraftBackgroundColor: Color,
+        pheromoneColor: Color,
+        numberOfAnts: int,
+        antsPerSecond: int,
+        sourcePointRadius: int,
+        destinationPointRadius: int,
+        mapBorderThickness: int,
+        pheromoneIntensityTimeoutMs: int,
+        antsSemiMinorAxis: double,
+        antsSemiMajorAxis: double
+    )
+
+    +builder():SettingsBuilder
+}
+
+class aco.core.Settings.SettingsBuilder{
+    ..
+    +SettingsBuilder(
+                sourcePointColor: Color,
+                destinationPointColor: Color,
+                obstacleColor: Color,
+                boardBorderColor: Color,
+                mapBackgroundColor: Color,
+                mapFrameColor: Color,
+                mapBorderThickness: int,
+                sourcePointRadius: int,
+                destinationPointRadius: int,
+                statusBarCircleNextColor: Color,
+                statusBarCircleCurrentColor: Color,
+                statusBarCircleCompletedColor: Color,
+                boardBuilderDraftBorderColor: Color,
+                mapBuilderDraftBackgroundColor: Color,
+                antColor: Color,
+                numberOfAnts: int,
+                antsPerSecond: int,
+                pheromoneColor: Color,
+                pheromoneEvaporationTimeout: int,
+                antSemiMajorAxis: double,
+                antSemiMinorAxis: double
+    )
+
+    +load(file:File):SettingsBuilder
+    +load(o:SettingsBuilder):SettingsBuilder
+    +reset():SettingsBuilder
+    +subscribe(subscriber:SettingsBuilder.Subscriber):void
+    +save(file:File):void
+    +fromJSON(jsonString:String):SettingsBuilder
+    +toJSON():String
+    +getMapBuilderDraftBackgroundColor():Color
+    +setMapBuilderDraftBackgroundColor(mapBuilderDraftBackgroundColor:Color):void
+    +getMapBorderThickness():int
+    +setMapBorderThickness(mapBorderThickness:int):void
+    +setSourcePointColor(source:Color):void
+    +getSourcePointColor():Color
+    +getDestinationPointColor():Color
+    +setDestinationPointColor(destinationPointColor:Color):void
+    +getObstacleColor():Color
+    +setObstacleColor(obstacle:Color):void
+    +getMapBackgroundColor():Color
+    +setMapBackgroundColor(color:Color):void
+    +getAntColor():Color
+    +setAntColor(color:Color):void
+    +getMapFrameColor():Color
+    +setMapFrameColor(color:Color):void
+    +getStatusBarCircleNextColor():Color
+    +setStatusBarCircleNextColor(color:Color):void
+    +getStatusBarCircleCurrentColor():Color
+    +setStatusBarCircleCurrentColor(color:Color):void
+    +getStatusBarCircleCompletedColor():Color
+    +setStatusBarCircleCompletedColor(color:Color):void
+    +getBoardBorderColor():Color
+    +setBoardBorderColor(color:Color):void
+    +getBoardBuilderDraftBorderColor():Color
+    +setBoardBuilderDraftBorderColor(color:Color):void
+    +getNumberOfAnts():int
+    +setNumberOfAnts(n:int):void
+    +getSourcePointRadius():int
+    +setSourcePointRadius(sourcePointRadius:int):void
+    +getDestinationPointRadius():int
+    +setDestinationPointRadius(radius:int):void
+    +getAntsPerSecond():int
+    +setAntsPerSecond(sec:int):void
+    +getPheromoneEvaporationTimeout():int
+    +setPheromoneEvaporationTimeout(timout:int):void
+    +getPheromoneColor():Color
+    +setPheromoneColor(color:Color):void
+    +mapBorderThicknessSliderConfig():SettingsBuilder.SliderConfig
+    +sourcePointRadiusSliderConfig():SettingsBuilder.SliderConfig
+    +destinationPointRadiusSliderConfig():SettingsBuilder.SliderConfig
+    +numberOfAntsSpinnerConfig():SettingsBuilder.NumberSpinnerConfig
+    +pheromoneEvaporationTimeoutSpinnerConfig():SettingsBuilder.NumberSpinnerConfig
+    +build():Settings
+    -notifyListeners(event:SettingsBuilder.Subscriber.Event)
+    -reader():ObjectReader
+}
+
+interface aco.core.Settings.SettingsBuilder.Subscriber{
+    ..
+    on(event:aco.core.Settings.SettingsBuilder.Subscriber.Event):
+}
+
+enum aco.core.Settings.SettingsBuilder.Subscriber.Event {
+                SUBSCRIBED,
+                UNSUBSCRIBED,
+                SOURCE_POINT_COLOR_CHANGED,
+                DESTINATION_POINT_COLOR_CHANGED,
+                OBSTACLE_COLOR_CHANGED,
+                BOARD_BORDER_COLOR_CHANGED,
+                MAP_BACKGROUND_COLOR_CHANGED,
+                MAP_FRAME_COLOR_CHANGED,
+                MAP_BORDER_THICKNESS_CHANGED,
+                SOURCE_POINT_RADIUS_CHANGED,
+                DESTINATION_POINT_RADIUS_CHANGED,
+                STATUS_BAR_CIRCLE_COMPLETED_COLOR_CHANGED,
+                STATUS_BAR_CIRCLE_CURRENT_COLOR_CHANGED,
+                STATUS_BAR_CIRCLE_NEXT_COLOR_CHANGED,
+                SELECTOR_BORDER_COLOR_CHANGED,
+                SELECTOR_BACKGROUND_COLOR_CHANGED,
+                ANT_COLOR_CHANGED,
+                NUMBER_OF_ANTS_CHANGED,
+                ANTS_PER_SECOND_CHANGED,
+                PHEROMONE_COLOR_CHANGED,
+                PHEROMONE_EVAPORATION_TIMEOUT_CHANGED,
+                ANT_SEMI_MAJOR_AXIS_CHANGED,
+                ANT_SEMI_MINOR_AXIS_CHANGED;
+}
+
+
+
+aco.core.Settings +-- aco.core.Settings.SettingsBuilder
+aco.core.Settings.SettingsBuilder +-- aco.core.Settings.SettingsBuilder.Subscriber
+aco.core.Settings.SettingsBuilder.Subscriber +-- aco.core.Settings.SettingsBuilder.Subscriber.Event
+@enduml

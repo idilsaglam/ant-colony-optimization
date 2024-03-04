@@ -1,0 +1,15 @@
+@startuml
+left to right direction
+class ConfigurationPanel{
+    ..
+    +ConfigurationPanel(onClick: Consumer<ButtonType>)
+}
+
+enum ButtonType{
+     CREATE,
+        LOAD,
+        SETTINGS;
+}
+
+ConfigurationPanel +-- ButtonType
+@enduml

@@ -1,0 +1,197 @@
+@startuml
+left to right direction
+
+class Board extends Rectangle implements Runnable {
+  - executor:PausableThreadPoolExecutor
+  - sourcePoint: Board.CircularElement  
+  -  destinationPoint: Board.CircularElement
+  -  obstacles: Set<Board.Obstacle>
+  -  pheromones: ConcurrentHashMap<Point, Pheromone>
+  -  ants: Set<Board.Ant>
+  -  subscribers:Set<Board.Subscriber>
+  - settings:Settings 
+  ..
+  - Board(bounds:Rectangle,sourcePoint:CircularElement,destinationPoint:CircularElement, obstacles:Set<Obstacle>,settings:Settings)
+  +  getSourcePoint():CircularElement
+  + getDestinationPoint():CircularElement
+  + getObstacles():Set<Obstacles>
+  + getPheromones(): Map<Point, Pheromone>
+  + getSourcePointLocation(): Point
+  + getDestinationPointLocation():Point 
+  + run():void 
+  +pause():void 
+  +builder():Builder 
+  +stop():void 
+  - updatePheromones():void
+  + subscribe(subscriber:Subscriber):boolean
+  + unsubscribe(subscriber: Subscriber): boolean
+  - addPheromone(position:Point, intensity:int):void 
+  - spawnAnts():void
+  - getArea(element:IElement):Area
+  - areComponentsColludes( component:IElement,  other:IElement):boolean
+  - isInside(element:IElement):boolean
+}
+
+class Builder{
+    -  sourcePoint:CircularElement
+    - destinationPoint:CircularElement
+    - obstacles:Set<Obstacle>
+    - enclosingRectangle:Rectangle
+    - currentObstacle: Obstacle
+    ..
+    + Builder(sourcePoint:CircularElement,destinationPoint:CircularElement,obstacles:Set<Obstacle>,enclosingRectangle:Rectangle)
+    + from(selectedFile:File):Builder
+    + enclosingRectangle(enclosingRectangle:Rectangle):Builder
+    + getSourcePointLocation():Point 
+    + getDestinationPointLocation():Point 
+    + getObstacleBounds():Set<Rectangle>
+    + getSourcePoint():CircularElement
+    + sourcePoint(sourcePoint:CircularElement):Builder 
+    + getDestinationPoint(destinationPoint:CircularElement):Builder 
+    + destinationPoint(destinationPoint:CircularElement):Builder 
+    + getObstacles():Set<Obstacle>
+    + obstacle(obstacle:Obstacles):Builder 
+    + getBounds():Rectangle
+    + createObstacle(location:Point):void 
+    + resetEnclosingRectangle(point:Point):void 
+    + setBounds(point:Point):void 
+    + setSourcePoint(location:Point,radius:int):void 
+    + setDestinationPoint(location:Point,radius:int):void
+    + resizeCurrentObstacle(point:Point):void 
+    + isInsideOfTheBoard(element:IElement):boolean
+    + build(settings:Settings):Board
+    + getArea(element:IElement):Area
+    + isCollusionSafe(component:IElement, elementType:BoardElementType):boolean
+    + addCurrentObstacle():void 
+    + isEnclosingRectangleIsPresent():boolean 
+    + isSourcePointPresent():boolean 
+    + isDestinationPointPresent():boolean
+    + save(file:File):void 
+    - validate():void 
+    - isPresent(boardElementType:BoardElementType):boolean
+    - areComponentsColludes(component:IElement, other:IElement):boolean
+}
+
+class ElementColludesWithOtherElementsOfBoardException extends Exception{
+    +ElementColludesWithOtherElementsOfBoardException(topLeftCorner:Point,radius:int, boardElementType:BoardElementType)
+}
+
+class ElementOutOfBoundsException extends Exception{
+    +ElementOutOfBoundsException(topLeftCorner:Point, radius:double)
+}
+
+class Pheromone extends Point {
+    intensity:int 
+    lastUpdate:long 
+    ..
+    - Pheromone(position:Point,intensity:int)
+    - Pheromone(position:Point)
+    - updateIntensity():void 
+    - getPosition():Point
+    - updateIntensity(delta:int):void 
+    - update():void 
+    + canEvaporate():boolean 
+    - evaporate():void
+}
+
+class AntFactory{
+    - r:Random
+    - randomAnt():Ant 
+}
+class Ant extends EllipticalIElement{
+- uuid:UUID
+    ..
+    - Ant(x:double, y:double, semiMinor:double,semiMajor:double)
+    - move():void 
+    - isColludesWithObstacle():boolean 
+    - isArrivedToDestinationPoint():boolean 
+    - moveTo(to:Point):void 
+    - canMove(to:Point):boolean 
+    - calculateNewPoint():Point 
+    + hashCode():int 
+    + equals(o:Object):boolean 
+}
+
+enum BoardElementType {
+        SOURCE_POINT
+        DESTINATION_POINT
+        OBSTACLE
+        ..
+        +toString():String
+}
+
+class EllipticalIElement extends Ellipse implements IElement{
+    - EllipticalIElement(x:double, y:double, semiMinor:double,semiMajor:double)
+}
+
+class CircularElement extends Circle implements IElement{
+    +CircularElement(x:double, y:double,r:double)
+    +CircularElement(center:Point,r:double)
+    +toString():String 
+}
+
+class Obstacle extends Rectangle implements IElement{
+    +Obstacle(topLeftCorner:Point, w:int, h:int)
+    +Obstacle(topLeftCorner:Point)
+    +getArea(p:Point):Area
+}
+
+interface IElement{
+    +getArea(p:Point):Area 
+    +getLocation():Point
+}
+
+class Circle extends Ellipse{
+    +Circle(x:double, y:double,r:double)
+    +Circle(center:Point,r:double)
+    +getCenter():Point
+    +setCenter(point:Point):void 
+    +getRadius():double
+    +setRadius(r:double):void 
+}
+
+class Ellipse extends Ellipse2D{
+    #Ellipse(x:double, y:double, semiMinor:double, semiMajor:double)
+    +Ellipse(center:Point,semiMinor:double,semiMajor:double)
+    +getArea(projectedOrigin:Point):Area
+    +getX():double 
+    +getY():double
+    +getLocation():Point
+    +getWidth():double
+    +getHeight():double 
+    +isEmpty():boolean
+    +setFrame(x:double, y:double, w:double, h:double) 
+    +getBounds2D():Rectangle2D
+    +getCenter():Point 
+    +setCenter(p:Point):void 
+
+}
+
+interface Subscriber{
++onAntMoved(uuid:UUID,to:Point):void 
++onNewAntsSpawned(uuid:UUID,location:Point):void 
++onPheromoneIntensityChanged(position:Point, delta:int):void
++onSubscribed():void 
++onUnsubscribe():void
++onSubscriptionFailed(message:String):void 
++onUnsubscribeFailed(message:String):void
+}
+
+
+Board +-- Builder
+Board +-- Subscriber
+Board +-- ElementColludesWithOtherElementsOfBoardException
+Board +-- ElementOutOfBoundsException
+Board +-- Pheromone
+Board +-- AntFactory
+Board +-- EllipticalIElement
+Board +-- Obstacle
+Board +-- IElement
+Board +-- CircularElement
+Board +-- Circle
+Board +-- Ellipse
+
+Board +-- Ant 
+Ant +-- BoardElementType
+@enduml
+

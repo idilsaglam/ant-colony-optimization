@@ -1,0 +1,7 @@
+@startuml(id=SettingsPanel_SettingsButtonsContainer)
+left to right direction
+class aco.gui.SettingsPanel.SettingsButtonsContainer extends javax.swing.JPanel{
+  --
+  - SettingsButtonsContainer()
+}
+@enduml

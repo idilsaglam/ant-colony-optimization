@@ -1,0 +1,21 @@
+@startuml(id=SettingsPanel_SettingsSelectorsContainer)
+left to right direction
+!include_many SettingsSelectorsContainer.SettingsContainerType.iuml!SettingsPanel_SettingsSelectorsContainer_SettingsContainerType
+!include_many SettingsSelectorsContainer.SettingsContainer.iuml!SettingsPanel_SettingsSelectorsContainer_SettingsContainer
+
+package aco.gui{
+  namespace SettingsPanel {
+    class SettingsSelectorsContainer extends javax.swing.JPanel {
+      - commonSettings: SettingsPanel.SettingsSelectorsContainer.SettingsContainer
+      - builderSettings: SettingsPanel.SettingsSelectorsContainer.SettingsContainer
+      - previewSettings: SettingsPanel.SettingsSelectorsContainer.SettingsContainer
+      --
+      - SettingsSelectorsContainer()
+      - rebuild(): void
+    }
+
+   SettingsSelectorsContainer.SettingsContainer --+ SettingsSelectorsContainer
+  }
+}
+
+@enduml

@@ -1,0 +1,3 @@
+rootProject.name = 'algorithme-colonies-de-fourmis'
+include 'gui'
+include 'core'

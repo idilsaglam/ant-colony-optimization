@@ -1,0 +1,8 @@
+@startuml
+left to right direction
+
+interface IVisitor{
+    visit(boardBuilder:BoardBuilder, callback:EmtyCallBack,callback:EmtyCallBack,callback:EmtyCallBack,callback:EmtyCallBack,callback:EmtyCallBack):return 
+}
+
+@enduml
